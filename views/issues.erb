@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Issues</title>
+	<link rel=stylesheet type="text/css" href="index.css">
+	<script src="index.js"></script>
+</head>
+<body>
+<div>
+	<p>Here are the issues that User <%= @id %> is connected with: </p>
+	<div id="open">
+		<ul>
+			<% @conversations.each do |convo|%>
+				<li>https://app.intercom.io/a/apps/qrhcqgez/inbox/inbox/conversation/<%= convo[:id] %></li>
+			<% end %>
+		</ul>
+	</div>
+</div>
+</body>
+</html>
