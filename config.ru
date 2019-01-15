@@ -1,0 +1,3 @@
+require './issuing'
+
+run issuing
