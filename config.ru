@@ -1,3 +1,3 @@
 require './issuing'
 
-run issuing
+run Sinatra::Application
