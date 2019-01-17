@@ -1,5 +1,5 @@
 require 'sinatra'
-require 'dotenv'
+require 'dotenv/load'
 require 'json'
 require 'intercom'
 
@@ -14,8 +14,9 @@ post '/' do
 	erb :issues
 end
 
+
 def initialize_intercom
-	if @intercom.nil? 
+	if @intercom.nil? then
 		token = ENV['token']
 		@intercom = Intercom::Client.new(token: token)
 	end

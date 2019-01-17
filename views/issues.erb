@@ -7,13 +7,12 @@
 </head>
 <body>
 <div>
-	<p>Here are the issues that User <%= @id %> is connected with: </p>
-	<div id="open">
-		<ul>
-			<% @conversations.each do |convo|%>
-				<li>https://app.intercom.io/a/apps/qrhcqgez/inbox/inbox/conversation/<%= convo[:id] %></li>
-			<% end %>
-		</ul>
+	<p>Conversations:</p>
+	<ul>
+		<% @conversations.each do |convo| %>
+			<li><%= convo.id %></li>
+		<% end %>
+	</ul>
 	</div>
 </div>
 </body>
