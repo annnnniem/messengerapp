@@ -10,7 +10,8 @@ end
 post '/' do 
 	@id = params[:id]
 	initialize_intercom
-	get_conversations
+	list_conversations
+	get_each_convo_and_check_for_gh
 	erb :issues
 end
 
@@ -22,6 +23,21 @@ def initialize_intercom
 	end
 end
 
-def get_conversations
+def list_conversations
 	@conversations = @intercom.conversations.find_all(:type => 'user', :intercom_user_id => @id)
 end
+
+def get_each_convo_and_check_for_gh
+	@conversations.each do |convo|
+		@intercom.conversations.find(:id => convo.id)
+		@conversation_text = convo["data"]["item"]["conversation_message"]["body"]
+		@github_convos = []
+		if @conversation_text.include? "https://github.com"
+			@github_convos << convo
+		end
+			
+	end
+
+end
+
+#something is wrong with the array but i can't figure it out rn
