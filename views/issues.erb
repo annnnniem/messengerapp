@@ -9,11 +9,10 @@
 <div>
 	<p>Conversations:</p>
 	<ul>
-		<% github_convos.each do |convo| %>
-			<li><%= convo.id %></li>
+		<% @github_convos.each do |convo| %>
+			<%= convo.id %>
 		<% end %>
 	</ul>
-	</div>
 </div>
 </body>
 </html>

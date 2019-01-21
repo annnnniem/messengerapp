@@ -10,8 +10,25 @@ end
 post '/' do 
 	@id = params[:id]
 	initialize_intercom
-	list_conversations
-	get_each_convo_and_check_for_gh
+	@conversations = @intercom.conversations.find_all(:type => 'user', :intercom_user_id => @id)
+	@conversations.each do |i|
+		#get each convo
+		convo = @intercom.conversations.find(:id => i.id)
+		#get parts on the gotten convo
+		convo_parts = convo.conversation_parts
+		#look in each convo part
+		@github_convos = Array.new
+		convo_parts.each do |m|
+			if !m.body.nil? 
+				if m.body.include? "a"
+					@github_convos.push(i)
+				else
+					break
+				end
+				puts @github_convos
+			end
+		end
+	end
 	erb :issues
 end
 
@@ -22,22 +39,3 @@ def initialize_intercom
 		@intercom = Intercom::Client.new(token: token)
 	end
 end
-
-def list_conversations
-	@conversations = @intercom.conversations.find_all(:type => 'user', :intercom_user_id => @id)
-end
-
-def get_each_convo_and_check_for_gh
-	@conversations.each do |convo|
-		@intercom.conversations.find(:id => convo.id)
-		@conversation_text = convo["data"]["item"]["conversation_message"]["body"]
-		@github_convos = []
-		if @conversation_text.include? "https://github.com"
-			@github_convos << convo
-		end
-			
-	end
-
-end
-
-#something is wrong with the array but i can't figure it out rn
