@@ -7,10 +7,12 @@
 </head>
 <body>
 <div>
-	<p>Conversations:</p>
+	<p>Github issues they're associated with: </p>
 	<ul>
 		<% @github_convos.each do |convo| %>
-			<%= convo.id %>
+			<ul>
+				<li><%= convo %></li>
+			</ul> 
 		<% end %>
 	</ul>
 </div>

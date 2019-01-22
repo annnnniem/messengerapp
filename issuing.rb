@@ -8,6 +8,9 @@ get '/' do
 end
 
 post '/' do 
+	#array to hold the convos
+	@github_convos = []
+	#get the user id from the field input
 	@id = params[:id]
 	initialize_intercom
 	@conversations = @intercom.conversations.find_all(:type => 'user', :intercom_user_id => @id)
@@ -17,18 +20,18 @@ post '/' do
 		#get parts on the gotten convo
 		convo_parts = convo.conversation_parts
 		#look in each convo part
-		@github_convos = Array.new
 		convo_parts.each do |m|
 			if !m.body.nil? 
-				if m.body.include? "a"
-					@github_convos.push(i)
+				if m.body.include? "github"
+					puts m.body
+					@github_convos << m.body
 				else
 					break
 				end
-				puts @github_convos
 			end
 		end
 	end
+	puts @github_convos
 	erb :issues
 end
 
