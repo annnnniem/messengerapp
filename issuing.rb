@@ -32,14 +32,13 @@ end
 def get_conversation(conversation)
 	#get each convo
 	@convo = @intercom.conversations.find(:id => conversation.id)
-	#get parts on the gotten convo
-	convo_parts = @convo.conversation_parts
 	#look in each convo part
-	convo_parts.each do |m|
+	#array_of_notes = @convo.conversation_parts.reject { |part| part.part_type != 'note'}
+	@convo.conversation_parts.each do |m| #can i do the opposite--reject it unless conditions match and THEN look at the part (.reject method)
 		if !m.body.nil? && m.part_type == "note"
 			downcased_body = m.body.downcase
-			if downcased_body.include? "github"
-				@github_convos.store(conversation.id, m.body)
+			if downcased_body.include? "https://github"
+				@github_convos.store(conversation.id, m.body) #Q for joel: how do I access these items in this array in my erb? 
 			else
 				break
 			end
