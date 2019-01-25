@@ -3,6 +3,14 @@ require 'dotenv/load'
 require 'json'
 require 'intercom'
 
+def initialize_intercom
+	if @intercom.nil? then
+		token = ENV['token']
+		@intercom = Intercom::Client.new(token: token)
+		puts "got my token"
+	end
+end
+
 get '/' do 
 	erb :index
 end
@@ -13,20 +21,13 @@ post '/' do
 	#get the user id from the field input
 	@id = params[:id]
 	initialize_intercom
+	puts "initialized••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"
 	@conversations = @intercom.conversations.find_all(:type => 'user', :intercom_user_id => @id)
 	@conversations.each do |i|
 		get_conversation(i)
 	end
 	puts @github_convos
 	erb :issues
-end
-
-
-def initialize_intercom
-	if @intercom.nil? then
-		token = ENV['token']
-		@intercom = Intercom::Client.new(token: token)
-	end
 end
 
 def get_conversation(conversation)
@@ -45,3 +46,5 @@ def get_conversation(conversation)
 		end
 	end
 end
+
+#reject stuff as soon as possible all the time
