@@ -1,3 +1,3 @@
-require './issuing'
+require './messengerapp'
 
 run Sinatra::Application
